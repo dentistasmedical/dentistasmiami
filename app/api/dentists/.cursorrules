@@ -1,0 +1,79 @@
+# DentistasMiami.com - Cursor/Claude Rules
+
+## Tech Stack (STRICT)
+- Use Next.js 15 App Router (not Pages Router)
+- TypeScript with strict mode
+- Tailwind CSS v4 (use @tailwindcss/typography for blog posts)
+- Shadcn/ui components for UI elements
+- MDX with remark-gfm for blog content
+- Google Places API for dentist data
+
+## Next.js Best Practices
+- Default to Server Components (no 'use client' unless necessary)
+- Use 'use client' ONLY for: useState, useEffect, event handlers, browser APIs
+- Use fetch with `next: { revalidate: X }` for data caching
+- Implement ISR for dynamic pages (already done on /api/dentists)
+- Collocate components in `_components` folders when page-specific
+
+## Data Rules (CRITICAL)
+- NEVER add fields that Google Places API doesn't provide
+- NEVER make up pricing data
+- NEVER claim dentists accept insurance unless verified
+- Only show: name, address, phone, rating, reviewCount, image from Google
+- Premium listings can have custom data (dentist-provided only)
+
+## Styling
+- Primary colors: Teal (#0d9488) and Coral (#f94144)
+- Use teal-600 for primary buttons
+- Use coral-500 for accents
+- Hero sections: bg-gradient-to-br from-teal-100 to-teal-50
+- No vertical border bars (border-l-4) in body content
+- Tables: teal header, white rows, hover effects
+
+## Legal/Compliance
+- Always include disclaimers on pricing/insurance pages
+- No medical advice claims
+- No guarantee of results
+- Make it clear we're a directory, not a provider
+- All pricing shown as "typical ranges" not specific to dentists
+
+## Code Quality
+- Concise variable names for readability (i, j for loops is fine)
+- Comment WHY not WHAT
+- Handle errors gracefully with try/catch
+- Log errors to console for debugging
+- Validate all form inputs with Zod
+
+## MDX Blog Posts
+- Use remark-gfm for tables
+- Tables must have teal headers (see components in blog/[slug]/page.tsx)
+- No special characters (accents, tildes) in frontmatter tags
+- Always include: title, description, date, author, category, tags
+- Include internal links to /dentistas and /precios
+- Add disclaimer at bottom of each post
+
+## File Organization
+- Server Components: app/[route]/page.tsx
+- Client Components: marked with 'use client' at top
+- Shared components: /components/
+- Page-specific components: app/[route]/_components/
+- API routes: app/api/[route]/route.ts
+- Blog content: content/blog/*.mdx
+- Types: types/index.ts
+- Utils: lib/utils/
+
+## Communication Style
+- Explain WHY before giving code
+- Ask clarifying questions before implementing
+- Provide step-by-step instructions
+- Don't assume Marcus has implemented previous suggestions
+- Check what's actually in the project before referencing it
+
+## What NOT to Do
+- ❌ Don't use localStorage or sessionStorage (not supported in artifacts)
+- ❌ Don't add fake data to fill gaps
+- ❌ Don't use Pages Router patterns
+- ❌ Don't suggest libraries not in package.json
+- ❌ Don't make medical or legal claims
+- ❌ Don't use blue colors (site uses teal/coral)
+- ❌ Don't create multiple artifacts per response

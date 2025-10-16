@@ -1,0 +1,38 @@
+# DentistasMiami.com - Project Rules
+
+## Project Overview
+Building a professional Spanish-language dental directory for Miami using Next.js 15, TypeScript, and Tailwind CSS.
+
+## Tech Stack
+- Next.js 15 (App Router)
+- TypeScript (strict mode)
+- Tailwind CSS + shadcn/ui
+- MDX for content
+- Zod for validation
+- Google Places API for dentist data
+
+## Code Style & Standards
+
+### TypeScript
+- Use TypeScript for all files (.ts, .tsx)
+- Enable strict mode
+- Never use 'any' - use 'unknown' if type is truly unknown
+
+### React/Next.js
+- Use Server Components by default
+- Only add 'use client' when necessary
+- File naming: kebab-case for files, PascalCase for components
+
+### Security
+- Validate all user input with Zod schemas
+- Use environment variables for secrets
+- Never expose API keys to client
+
+### Spanish Language
+- All user-facing content in Spanish
+- Use natural, conversational tone
+
+## When Helping Me Code
+1. Always explain what the code does
+2. Point out security considerations
+3. Ensure TypeScript types are correct

@@ -1,0 +1,39 @@
+TECHNICAL DECISIONS MADE:
+
+## API Integrations
+- Google Places API: Fetch dentist listings (name, address, phone, rating, photos)
+  - Pagination: Up to 60 results (3 pages × 20)
+  - Radius: 8km around neighborhood coordinates
+  - DO NOT add fields that Google doesn't provide
+
+## Data We Show
+FREE LISTINGS (from Google):
+- ✅ Name
+- ✅ Address  
+- ✅ Phone
+- ✅ Google rating & review count
+- ✅ Photos (if available)
+- ✅ Neighborhood
+- ❌ NO pricing
+- ❌ NO insurance info
+- ❌ NO services list
+- ❌ NO verified claims
+
+PREMIUM LISTINGS (dentist submitted):
+- ✅ All of above
+- ✅ Verified pricing (dentist provides)
+- ✅ Insurance accepted (dentist provides)
+- ✅ Services offered (dentist provides)
+- ✅ Featured placement
+- ✅ "Verified" badge
+- Requires: Signed agreement + $99/month
+
+## Pricing Strategy
+- NO individual dentist prices on free listings
+- General market ranges on /precios page (with disclaimers)
+- Individual prices ONLY for premium verified listings
+
+## Legal Protection
+- Disclaimers on footer and key pages
+- Only show verifiable public data
+- Premium features require dentist agreement
