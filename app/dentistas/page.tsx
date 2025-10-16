@@ -35,29 +35,59 @@ async function getDentists(neighborhood?: string) {
   return data.dentists || [];
 }
 
-// Generate schema for all dentists
-function generateDentistSchema(dentists: any[]) {
-  return dentists.map((dentist) => ({
+// Generate ItemList schema for directory page
+function generateDirectorySchema(dentists: any[]) {
+  return {
     "@context": "https://schema.org",
-    "@type": "Dentist",
-    "name": dentist.name,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": dentist.address,
-      "addressLocality": "Miami",
-      "addressRegion": "FL",
-      "addressCountry": "US"
-    },
-    ...(dentist.phone && { "telephone": dentist.phone }),
-    ...(dentist.rating && dentist.reviewCount && {
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": dentist.rating.toString(),
-        "reviewCount": dentist.reviewCount.toString()
+    "@type": "ItemList",
+    "itemListElement": dentists.map((dentist, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Dentist",
+        "name": dentist.name,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": dentist.address,
+          "addressLocality": "Miami",
+          "addressRegion": "FL",
+          "addressCountry": "US"
+        },
+        ...(dentist.phone && { "telephone": dentist.phone }),
+        ...(dentist.rating && dentist.reviewCount && {
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": dentist.rating.toString(),
+            "reviewCount": dentist.reviewCount.toString()
+          }
+        }),
+        ...(dentist.image && { "image": dentist.image })
       }
-    }),
-    ...(dentist.image && { "image": dentist.image })
-  }));
+    }))
+  };
+}
+
+// Generate BreadcrumbList schema
+function generateBreadcrumbSchema() {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://dentistasmiami.com';
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio (Home)",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Dentistas en Miami",
+        "item": `${baseUrl}/dentistas`
+      }
+    ]
+  };
 }
 
 export default async function DentistasPage({
@@ -68,18 +98,22 @@ export default async function DentistasPage({
   const params = await searchParams;
   const selectedNeighborhood = params.neighborhood;
   const dentists = await getDentists(selectedNeighborhood);
-  const schemas = generateDentistSchema(dentists);
+  const directorySchema = generateDirectorySchema(dentists);
+  const breadcrumbSchema = generateBreadcrumbSchema();
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Schema.org JSON-LD for each dentist */}
-      {schemas.map((schema, index) => (
-        <script
-          key={`schema-${index}`}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
+      {/* Schema.org JSON-LD ItemList for directory */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(directorySchema) }}
+      />
+      
+      {/* Schema.org JSON-LD BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
