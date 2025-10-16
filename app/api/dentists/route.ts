@@ -18,13 +18,12 @@ export async function GET(request: NextRequest) {
   const neighborhood = searchParams.get('neighborhood')?.toLowerCase() || 'miami';
   const radius = parseInt(searchParams.get('radius') || '8000');
 
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY || process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY;
-  
+  // The API key must ONLY be accessed from the non-public environment variable.
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+
   if (!apiKey) {
-    return NextResponse.json(
-      { success: false, error: 'Google Places API key not configured' },
-      { status: 500 }
-    );
+    // CRITICAL: Throw an error if the key is missing from the secure environment.
+    throw new Error("GOOGLE_PLACES_API_KEY is not set in environment variables.");
   }
 
   try {
