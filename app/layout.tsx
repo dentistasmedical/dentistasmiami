@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import {Header} from "@/components/layout/Header";
 import {Footer}from "@/components/layout/Footer";
+import DOMPurify from 'dompurify';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -109,7 +110,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: DOMPurify.sanitize(JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "DentistasMiami",
@@ -126,7 +127,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
                 name: "DentistasMiami",
                 url: "https://dentistasmiami.com",
               },
-            }),
+            })),
           }}
         />
       </body>

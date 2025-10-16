@@ -3,6 +3,7 @@ import { DentistCard } from '@/components/DentistCard';
 import { Container } from '@/components/layout/Container';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import DOMPurify from 'dompurify';
 
 const neighborhoods = [
   { name: 'Hialeah', slug: 'hialeah', count: 45 },
@@ -78,11 +79,11 @@ export default async function HomePage() {
           <>
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(JSON.stringify(organization)) }}
             />
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(webSite) }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(JSON.stringify(webSite)) }}
             />
           </>
         );

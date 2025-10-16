@@ -1,5 +1,6 @@
 import { DentistCard } from '@/components/DentistCard';
 import NeighborhoodFilter from '@/components/NeighborhoodFilter';
+import DOMPurify from 'dompurify';
 
 // Enable ISR - revalidate every 6 hours
 export const revalidate = 21600;
@@ -106,13 +107,13 @@ export default async function DentistasPage({
       {/* Schema.org JSON-LD ItemList for directory */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(directorySchema) }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(JSON.stringify(directorySchema)) }}
       />
       
       {/* Schema.org JSON-LD BreadcrumbList */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(JSON.stringify(breadcrumbSchema)) }}
       />
 
       {/* Header */}

@@ -3,6 +3,7 @@ import { Container } from '@/components/layout/Container';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import DOMPurify from 'dompurify';
 
 export const metadata: Metadata = {
   title: '¿Cuánto Cuesta el Dentista en Miami? | Precios 2025 - DentistasMiami',
@@ -124,7 +125,7 @@ export default function PreciosPage() {
         return (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(JSON.stringify(breadcrumb)) }}
           />
         );
       })()}

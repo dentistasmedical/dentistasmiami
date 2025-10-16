@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import DOMPurify from 'dompurify';
 
 interface DentistCardProps {
   id: string;
@@ -52,7 +53,7 @@ export function DentistCard({
       {/* Schema.org JSON-LD - Hidden from users, visible to Google */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(JSON.stringify(schemaData)) }}
       />
 
       {/* Visual Card that users see */}
